@@ -1,0 +1,14 @@
+h1 {
+    background-color:slateblue;
+}
+
+p{
+    background: gray;
+    border: 10px solid black;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 50px;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 20px;
+    width: 20cm;
+    font-size: 20pt;
+}
