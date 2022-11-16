@@ -1,0 +1,24 @@
+h1 {
+    background-color:slateblue;
+}
+
+p{
+    overflow-x: hidden;
+    
+    background: gray;
+    background-image: url(./public/jare.jpeg);
+    border: 10px solid black;
+    color: cyan;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 50px;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 20px;
+    box-shadow: -6px 8px 10px 5px grey,
+                2px 2px 4px 2px gray inset;
+    max-width: 1000px;
+    max-height: 200px;
+    padding-top: 10%;
+    width: 50%;
+    font-size: 20pt;
+    padding: 10px;
+}
