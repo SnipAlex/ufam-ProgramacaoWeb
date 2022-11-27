@@ -1,0 +1,34 @@
+.Produto1
+{
+    border: 1px solid;
+    text-align: center;
+    font-weight: bold;
+}
+td
+{
+    border: 1px solid;
+}
+.name1
+{
+    border: 1px solid;
+    padding: 1px;
+}
+tr
+{
+    text-align: center;
+}
+table
+{
+    border: 1px solid;
+    padding: 1px;
+}
+table.tabela2{ position: relative; top: -272px; left: 120px;}
+table.tabela3{ position: relative; top: -544px; left: 240px;}
+table.tabela4{ position: relative; top: -815px; left: 360px;}
+table.tabela5{ position: relative; top: -1087px; left: 480px;}
+
+table.tabela6{ position: relative; top: -1060px;}
+table.tabela7{ position: relative; top: -1332px; left: 120px;}
+table.tabela8{ position: relative; top: -1604px; left: 240px;}
+table.tabela9{ position: relative; top: -1876px; left: 360px;}
+table.tabela10{ position: relative; top: -2148px; left: 480px;}
