@@ -8,7 +8,7 @@ td
 {
     border: 1px solid;
 }
-.name1
+th
 {
     border: 1px solid;
     padding: 1px;
@@ -20,7 +20,7 @@ tr
 table
 {
     border: 1px solid;
-    padding: 1px;
+    padding: 2px;
 }
 table.tabela2{ position: relative; top: -272px; left: 120px;}
 table.tabela3{ position: relative; top: -544px; left: 240px;}
