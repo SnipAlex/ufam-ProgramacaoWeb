@@ -1,0 +1,10 @@
+Hosting em JS é que qualquer var, let const, function declarada 
+ela é visivel em todo o escopo do programa. Com hosting é possivel 
+mudar as ordem de cada elemento, por exemplo fazer as chamadas de funções
+no topo do codigo.
+
+foo();
+
+foo(){
+    console.log("ola");
+}

@@ -1,0 +1,11 @@
+Linha 04 possui erro, foi escrito de forma errada como é 
+feito comentario no html. O correto seria <!-- -->
+
+Lilha 10 esta incorreto o uso de background-color. O correto seria
+    #para{background-color: blue}
+
+Da linha 14 terminar o head mas não apresenta um body
+
+Linha 24 o uso de <style> esta incorreto, deveria 
+usar a tag <script>
+
