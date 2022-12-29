@@ -6,9 +6,8 @@ label{
     text-align: right;
 }
 input {
-  display: inline-block;
-  float: left;
-  position: relative;
-  margin-left: 10px;
-  
+    display: inline-block;
+    float: left;
+    position: relative;
+    margin-left: 10px;
 }
