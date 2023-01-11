@@ -8,7 +8,9 @@ const PORT = 3000
 
 app.use(logger())
 
-app.engine("handlebars", handlebars.engine()) // Engine de views
+app.engine("handlebars", handlebars.engine({
+    helpers: require(`${__dirname}/views/helpers/helpers`)
+})) // Engine de views
 app.set("view engine", "handlebars")
 app.set("views", `${__dirname}/views`)
 

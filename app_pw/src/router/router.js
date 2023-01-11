@@ -1,17 +1,8 @@
 const express = require("express")
 const router = express.Router()
+const mainController = require("../controllers/main")
 
-router.get("/", (req, res) => {
-    const nome = `
-    PANELA CRAFT`
-    res.render("index", {
-        nome: nome,
-        layout: false
-    })
-})
-
-router.get("/about", (req, res) => {
-    res.send("Hellor world")
-})
+router.get("/", mainController.index)
+router.get("/about", mainController.about)
 
 module.exports = router
