@@ -5,7 +5,7 @@
     // Determina o FPS
     const FPS = 100;
 
-    const PROB_ENEMY_SHIP =  0.5;
+    const PROB_ENEMY_SHIP =  0.5; // Probilidade de aparecer inimigo
     
     let space, ship;
     let enemies = [];
@@ -39,6 +39,31 @@
         }
     }
 
+    class Hitbox{
+        constructor(x, y, width, height, tag)
+        {
+            this.x = x
+            this.y = y
+            this.width = width
+            this.height = height
+            this.tag = tag
+        }
+        
+        detector_Colisao(objeto)
+        {
+            if (objeto.tag === 'Inimigo')
+            {
+                return (
+                    this.x < objeto.x + objeto.width &&
+                    this.x + this.width > objeto.x &&
+                    this.y < objeto.y + objeto.height &&
+                    this.y + this.height >  objeto.y
+                );
+            }
+            return false;
+        }
+    }
+
     class Ship
     {
         constructor() 
@@ -53,6 +78,7 @@
             this.element.src = this.AssetDirecoes[this.direcao];
             this.element.style.bottom = "20px"
             this.element.style.left = `${parseInt(TAMX/2)-50}px`
+            // this.hitbox = new Hitbox(parseInt(TAMX/2)-50,)
         }
         mudaDirecao(giro)
         {
@@ -76,10 +102,10 @@
     {
         constructor()
         {
-            this.element = document.createElement("img");
-            this.element.className = "enemy-ship";
-            this.element.src = "assets/enemyShip.png";
-            this.element.style.top = "0px";
+            this.element = document.createElement("img"); // Cria um elemento que retorna imagem
+            this.element.className = "enemy-ship"; 
+            this.element.src = "assets/enemyShip.png"; // Recebe uma imagem da pasta
+            this.element.style.top = "0px"; // Isso indica o movimento vertial do inimigo
             this.element.style.left = `${
                 Math.floor(Math.random()*TAMX)
             }px`
