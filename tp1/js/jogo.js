@@ -124,15 +124,21 @@
             //Instancia o enimigo
             enemies.push(new EnemyShip());
         }
-
+        // Para cada inimigo instanciado, ele vai fazer:
         enemies.forEach((e) => {
+            // Fazer movimento
             e.move()
+            // Fazer check de colisão
             if(ship.detectaColisao(e.element))
             {
                 console.log("Colisão")
+                // Fazer uma função de morte para jogador e inimigo.
             }
+            // Fazer uma função de check do inimigo com tiro.
         })
         ship.move();
+        // Função de tiro da nave
+        // Função de pontuação
     }
     init();
 })();
