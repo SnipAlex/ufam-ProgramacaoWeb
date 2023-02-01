@@ -167,7 +167,10 @@
         
         if(random_asteroide <= PROB_ASTEROIDE)
         {
-            enemies.push(new AsteroideGrande());
+            if(random_asteroide%2==0)
+                enemies.push(new AsteroideGrande());
+            else
+                enemies.push(new AsteroidePequeno());
         }
         // Para cada inimigo instanciado, ele vai fazer:
         enemies.forEach((e) => {
