@@ -47,6 +47,7 @@
             this.width = width
             this.height = height
             this.tag = tag
+<<<<<<< HEAD
         }
         
         // detector_Colisao(objeto)
@@ -62,6 +63,9 @@
         //     }
         //     return false;
         // }
+=======
+        } 
+>>>>>>> 26d2827b590d8fb7d986973e04bf82223f519346
     }
 
     class Ship
@@ -78,7 +82,11 @@
             this.element.src = this.AssetDirecoes[this.direcao];
             this.element.style.bottom = "20px"
             this.element.style.left = `${parseInt(TAMX/2)-50}px`
+<<<<<<< HEAD
             this.hitbox = new Hitbox(parseInt(TAMX/2)-50,20,)
+=======
+            this.hitbox = new Hitbox(parseInt(TAMX/2)-50,10,20,20,"Jogador")
+>>>>>>> 26d2827b590d8fb7d986973e04bf82223f519346
         }
         mudaDirecao(giro)
         {
@@ -110,6 +118,7 @@
                 Math.floor(Math.random()*TAMX)
             }px`
             space.element.appendChild(this.element);
+            this.hitbox = new Hitbox(parseInt(TAMX/2)-50,10,20,20,"inimigo")
         }
         move()
         {
@@ -118,6 +127,16 @@
             }px`;
         }
     }
+    function colisao(obj1,obj2) // Vai detectar colisões
+    {
+        return (
+            obj1.x < obj2.x + obj2.width &&
+            obj1.x + obj1.width > obj2.x &&
+            obj1.y < obj2.y + obj2.height &&
+            obj1.y + obj1.height > obj2.y
+        );
+    }
+
     // Run define o que vai acontecer no jogo 
     function run() {
         const random_enemy_ship = Math.random() * 100;
@@ -127,6 +146,10 @@
             enemies.push(new EnemyShip());
         }
         enemies.forEach((e) => e.move())
+        if(colisao(ship.hitbox, enemies.hitbox))
+        {
+            console.log(`Objeto ${ship.tag}, colidio com ${enemies.tag}`)
+        }
         ship.move();
     }
     init();
