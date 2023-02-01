@@ -49,19 +49,19 @@
             this.tag = tag
         }
         
-        detector_Colisao(objeto)
-        {
-            if (objeto.tag === 'Inimigo')
-            {
-                return (
-                    this.x < objeto.x + objeto.width &&
-                    this.x + this.width > objeto.x &&
-                    this.y < objeto.y + objeto.height &&
-                    this.y + this.height >  objeto.y
-                );
-            }
-            return false;
-        }
+        // detector_Colisao(objeto)
+        // {
+        //     if (objeto.tag === 'Inimigo')
+        //     {
+        //         return (
+        //             this.x < objeto.x + objeto.width &&
+        //             this.x + this.width > objeto.x &&
+        //             this.y < objeto.y + objeto.height &&
+        //             this.y + this.height >  objeto.y
+        //         );
+        //     }
+        //     return false;
+        // }
     }
 
     class Ship
@@ -78,7 +78,7 @@
             this.element.src = this.AssetDirecoes[this.direcao];
             this.element.style.bottom = "20px"
             this.element.style.left = `${parseInt(TAMX/2)-50}px`
-            // this.hitbox = new Hitbox(parseInt(TAMX/2)-50,)
+            this.hitbox = new Hitbox(parseInt(TAMX/2)-50,20,)
         }
         mudaDirecao(giro)
         {

@@ -22,8 +22,19 @@ const create = async(req, res) => {
         }
     }
 }
+
 const read = async(req, res) => {}
+
 const update = async(req, res) => {}
-const remove = async(req, res) => {}
+
+const remove = async(req, res) => {
+    const { id } = req.params;
+    try {
+        await Curso.destroy({ where: { id } });
+        res.redirect("/curso");
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 modulo.exports = {index, create, read, update, remove}
