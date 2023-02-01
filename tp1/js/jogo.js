@@ -5,8 +5,9 @@
     // Determina o FPS
     const FPS = 100;
 
-    const PROB_ENEMY_SHIP =  0.5; // Probilidade de aparecer inimigo
-    
+    const PROB_ENEMY_SHIP =  0.5; // Probilidade de aparecer nave inimiga
+    const PROB_ASTEROIDE = 0.3; // Probilidade de aparecer asteroide
+
     let space, ship;
     let enemies = [];
 
@@ -70,16 +71,16 @@
                 ${parseInt(this.element.style.left)+1}px`
             space.move();
         }
+        atira()
+        {
+            // Instancia um Objeto tiro
+        }
         detectaColisao(enemy)
         {
             let jogadorHitbox = this.element.getBoundingClientRect();
             let inimigoHitbox = enemy.getBoundingClientRect();
 
             return !(
-                // this.hitbox.x < inimigo.x + inimigo.width &&
-                // obj1.x + obj1.width > obj2.x &&
-                // obj1.y < obj2.y + obj2.height &&
-                // obj1.y + obj1.height > obj2.y
                 jogadorHitbox.bottom < inimigoHitbox.top ||
                 jogadorHitbox.top > inimigoHitbox.bottom ||
                 jogadorHitbox.right < inimigoHitbox.left ||
@@ -119,15 +120,26 @@
     // Run define o que vai acontecer no jogo 
     function run() {
         const random_enemy_ship = Math.random() * 100;
+        const random_asteroide = Math.random() * 50;
         if(random_enemy_ship <= PROB_ENEMY_SHIP)
         {
             //Instancia o enimigo
             enemies.push(new EnemyShip());
         }
+        
+        if(random_asteroide <= PROB_ASTEROIDE)
+        {
+            enemies.push(new Asteroides());
+        }
         // Para cada inimigo instanciado, ele vai fazer:
         enemies.forEach((e) => {
             // Fazer movimento
             e.move()
+            // if(e === EnemyShip())
+            // {
+            //     console.log("Nave inimiga")
+            // }
+            // else console.log("Outra coisa")
             // Fazer check de colisão
             if(ship.detectaColisao(e.element))
             {
