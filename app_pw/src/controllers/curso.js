@@ -10,7 +10,9 @@ const index = async(req, res) => {
 
 const create = async(req, res) => {
     if(req.route.methods.get){
-        res.render("curso/create");
+        res.render("curso/create", {
+            csrf: req.csrfToken()
+        });
     }
     else {
         const curso = req.body
