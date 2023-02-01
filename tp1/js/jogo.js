@@ -39,17 +39,6 @@
         }
     }
 
-    class Hitbox{
-        constructor(x, y, width, height, tag)
-        {
-            this.x = x
-            this.y = y
-            this.width = width
-            this.height = height
-            this.tag = tag
-        } 
-    }
-
     class Ship
     {
         constructor() 
@@ -64,7 +53,6 @@
             this.element.src = this.AssetDirecoes[this.direcao];
             this.element.style.bottom = "20px"
             this.element.style.left = `${parseInt(TAMX/2)-50}px`
-            this.hitbox = new Hitbox(parseInt(TAMX/2)-50,20,20,20,"Jogador")
         }
         mudaDirecao(giro)
         {
@@ -82,16 +70,35 @@
                 ${parseInt(this.element.style.left)+1}px`
             space.move();
         }
-        detectaColisao(inimigo)
+        detectaColisao(enemy)
         {
-            console.log("colou")
+            let jogadorHitbox = this.element.getBoundingClientRect();
+            let inimigoHitbox = enemy.getBoundingClientRect();
+
+            return !(
+                // this.hitbox.x < inimigo.x + inimigo.width &&
+                // obj1.x + obj1.width > obj2.x &&
+                // obj1.y < obj2.y + obj2.height &&
+                // obj1.y + obj1.height > obj2.y
+                jogadorHitbox.bottom < inimigoHitbox.top ||
+                jogadorHitbox.top > inimigoHitbox.bottom ||
+                jogadorHitbox.right < inimigoHitbox.left ||
+                jogadorHitbox.left > inimigoHitbox.right
+
+            );
         }
     }
     
+    class Asteroides
+    {
+
+    }
+
     class EnemyShip
     {
         constructor()
         {
+            this.tag = "InimigoNave"
             this.element = document.createElement("img"); // Cria um elemento que retorna imagem
             this.element.className = "enemy-ship"; 
             this.element.src = "assets/enemyShip.png"; // Recebe uma imagem da pasta
@@ -100,7 +107,6 @@
                 Math.floor(Math.random()*TAMX)
             }px`
             space.element.appendChild(this.element);
-            this.hitbox = new Hitbox(parseInt(TAMX/2)-50,10,20,20,"inimigo")
         }
         move()
         {
@@ -108,15 +114,6 @@
                 parseInt(this.element.style.top) + 2
             }px`;
         }
-    }
-    function colisao(obj1,obj2) // Vai detectar colisões
-    {
-        return (
-            obj1.x < obj2.x + obj2.width &&
-            obj1.x + obj1.width > obj2.x &&
-            obj1.y < obj2.y + obj2.height &&
-            obj1.y + obj1.height > obj2.y
-        );
     }
 
     // Run define o que vai acontecer no jogo 
@@ -127,11 +124,14 @@
             //Instancia o enimigo
             enemies.push(new EnemyShip());
         }
-        enemies.forEach((e) => e.move())
-        if(colisao(ship.hitbox, enemies.hitbox))
-        {
-            console.log(`Objeto ${ship.tag}, colidio com ${enemies.tag}`)
-        }
+
+        enemies.forEach((e) => {
+            e.move()
+            if(ship.detectaColisao(e.element))
+            {
+                console.log("Colisão")
+            }
+        })
         ship.move();
     }
     init();
