@@ -90,9 +90,47 @@
         }
     }
     
-    class Asteroides
+    class AsteroideGrande
     {
-
+        constructor()
+        {
+            this.tag = "AsteroideG"
+            this.element = document.createElement("img"); // Cria um elemento que retorna imagem
+            this.element.className = "asteroideG"; 
+            this.element.src = "assets/meteorBig.png"; // Recebe uma imagem da pasta
+            this.element.style.top = "0px"; // Isso indica o movimento vertial do inimigo
+            this.element.style.left = `${
+                Math.floor(Math.random()*TAMX)
+            }px`
+            space.element.appendChild(this.element);
+        }
+        move()
+        {
+            this.element.style.top = `${
+                parseInt(this.element.style.top) + 2
+            }px`;
+        }
+    }
+    class AsteroidePequeno
+    {
+        constructor()
+        {
+            this.tag = "AsteroideP"
+            this.element = document.createElement("img"); // Cria um elemento que retorna imagem
+            this.element.className = "asteroideP"; 
+            this.element.src = "assets/meteorSmall.png"; // Recebe uma imagem da pasta
+            this.element.style.top = "0px"; // Isso indica o movimento vertial do inimigo
+            this.element.style.left = `${
+                Math.floor(Math.random()*TAMX)
+            }px`
+            space.element.appendChild(this.element);
+        }
+        move()
+        {
+            this.element.style.top = `${
+                parseInt(this.element.style.top) + 2
+            }px`;
+        }
     }
 
     class EnemyShip
@@ -129,13 +167,13 @@
         
         if(random_asteroide <= PROB_ASTEROIDE)
         {
-            enemies.push(new Asteroides());
+            enemies.push(new AsteroideGrande());
         }
         // Para cada inimigo instanciado, ele vai fazer:
         enemies.forEach((e) => {
             // Fazer movimento
             e.move()
-            // if(e === EnemyShip())
+            // if(e === )
             // {
             //     console.log("Nave inimiga")
             // }
