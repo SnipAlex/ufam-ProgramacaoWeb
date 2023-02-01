@@ -64,7 +64,7 @@
             this.element.src = this.AssetDirecoes[this.direcao];
             this.element.style.bottom = "20px"
             this.element.style.left = `${parseInt(TAMX/2)-50}px`
-            this.hitbox = new Hitbox(parseInt(TAMX/2)-50,10,20,20,"Jogador")
+            this.hitbox = new Hitbox(parseInt(TAMX/2)-50,20,20,20,"Jogador")
         }
         mudaDirecao(giro)
         {
@@ -81,6 +81,10 @@
             if (this.direcao === 2) this.element.style.left = `
                 ${parseInt(this.element.style.left)+1}px`
             space.move();
+        }
+        detectaColisao(inimigo)
+        {
+            console.log("colou")
         }
     }
     
