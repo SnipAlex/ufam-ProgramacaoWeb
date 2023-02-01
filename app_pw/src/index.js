@@ -1,5 +1,6 @@
 const express = require("express")
 const handlebars = require("express-handlebars")
+const sass = require("node-sass-middleware")
 const logger = require("./middlewares/logger")
 const router = require("./router/router")
 const app = express()
@@ -13,6 +14,12 @@ app.engine("handlebars", handlebars.engine({
 })) // Engine de views
 app.set("view engine", "handlebars")
 app.set("views", `${__dirname}/views`)
+
+app.use(sass({
+    src: `${__dirname}/public/scss`,
+    dest: `${__dirname}/public/css`
+    
+}));
 
 app.use("/img", [
     express.static(`${__dirname}/../public/img`)
