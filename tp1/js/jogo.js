@@ -47,7 +47,25 @@
             this.width = width
             this.height = height
             this.tag = tag
+<<<<<<< HEAD
+        }
+        
+        // detector_Colisao(objeto)
+        // {
+        //     if (objeto.tag === 'Inimigo')
+        //     {
+        //         return (
+        //             this.x < objeto.x + objeto.width &&
+        //             this.x + this.width > objeto.x &&
+        //             this.y < objeto.y + objeto.height &&
+        //             this.y + this.height >  objeto.y
+        //         );
+        //     }
+        //     return false;
+        // }
+=======
         } 
+>>>>>>> 26d2827b590d8fb7d986973e04bf82223f519346
     }
 
     class Ship
@@ -64,7 +82,15 @@
             this.element.src = this.AssetDirecoes[this.direcao];
             this.element.style.bottom = "20px"
             this.element.style.left = `${parseInt(TAMX/2)-50}px`
+<<<<<<< HEAD
             this.hitbox = new Hitbox(parseInt(TAMX/2)-50,20,20,20,"Jogador")
+=======
+<<<<<<< HEAD
+            this.hitbox = new Hitbox(parseInt(TAMX/2)-50,20,)
+=======
+            this.hitbox = new Hitbox(parseInt(TAMX/2)-50,10,20,20,"Jogador")
+>>>>>>> 26d2827b590d8fb7d986973e04bf82223f519346
+>>>>>>> a646fdb885c2ccd3720f6d159ba690caed6c49aa
         }
         mudaDirecao(giro)
         {
