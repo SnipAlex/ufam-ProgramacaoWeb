@@ -5,8 +5,9 @@
     // Determina o FPS
     const FPS = 100;
 
-    const PROB_ENEMY_SHIP =  0.5; // Probilidade de aparecer inimigo
-    
+    const PROB_ENEMY_SHIP =  0.5; // Probilidade de aparecer nave inimiga
+    const PROB_ASTEROIDE = 0.3; // Probilidade de aparecer asteroide
+
     let space, ship;
     let enemies = [];
 
@@ -39,17 +40,6 @@
         }
     }
 
-    class Hitbox{
-        constructor(x, y, width, height, tag)
-        {
-            this.x = x
-            this.y = y
-            this.width = width
-            this.height = height
-            this.tag = tag
-        } 
-    }
-
     class Ship
     {
         constructor() 
@@ -64,7 +54,6 @@
             this.element.src = this.AssetDirecoes[this.direcao];
             this.element.style.bottom = "20px"
             this.element.style.left = `${parseInt(TAMX/2)-50}px`
-            this.hitbox = new Hitbox(parseInt(TAMX/2)-50,20,20,20,"Jogador")
         }
         mudaDirecao(giro)
         {
@@ -82,16 +71,35 @@
                 ${parseInt(this.element.style.left)+1}px`
             space.move();
         }
-        detectaColisao(inimigo)
+        atira()
         {
-            console.log("colou")
+            // Instancia um Objeto tiro
+        }
+        detectaColisao(enemy)
+        {
+            let jogadorHitbox = this.element.getBoundingClientRect();
+            let inimigoHitbox = enemy.getBoundingClientRect();
+
+            return !(
+                jogadorHitbox.bottom < inimigoHitbox.top ||
+                jogadorHitbox.top > inimigoHitbox.bottom ||
+                jogadorHitbox.right < inimigoHitbox.left ||
+                jogadorHitbox.left > inimigoHitbox.right
+
+            );
         }
     }
     
+    class Asteroides
+    {
+
+    }
+
     class EnemyShip
     {
         constructor()
         {
+            this.tag = "InimigoNave"
             this.element = document.createElement("img"); // Cria um elemento que retorna imagem
             this.element.className = "enemy-ship"; 
             this.element.src = "assets/enemyShip.png"; // Recebe uma imagem da pasta
@@ -100,7 +108,6 @@
                 Math.floor(Math.random()*TAMX)
             }px`
             space.element.appendChild(this.element);
-            this.hitbox = new Hitbox(parseInt(TAMX/2)-50,10,20,20,"inimigo")
         }
         move()
         {
@@ -109,30 +116,41 @@
             }px`;
         }
     }
-    function colisao(obj1,obj2) // Vai detectar colisões
-    {
-        return (
-            obj1.x < obj2.x + obj2.width &&
-            obj1.x + obj1.width > obj2.x &&
-            obj1.y < obj2.y + obj2.height &&
-            obj1.y + obj1.height > obj2.y
-        );
-    }
 
     // Run define o que vai acontecer no jogo 
     function run() {
         const random_enemy_ship = Math.random() * 100;
+        const random_asteroide = Math.random() * 50;
         if(random_enemy_ship <= PROB_ENEMY_SHIP)
         {
             //Instancia o enimigo
             enemies.push(new EnemyShip());
         }
-        enemies.forEach((e) => e.move())
-        if(colisao(ship.hitbox, enemies.hitbox))
+        
+        if(random_asteroide <= PROB_ASTEROIDE)
         {
-            console.log(`Objeto ${ship.tag}, colidio com ${enemies.tag}`)
+            enemies.push(new Asteroides());
         }
+        // Para cada inimigo instanciado, ele vai fazer:
+        enemies.forEach((e) => {
+            // Fazer movimento
+            e.move()
+            // if(e === EnemyShip())
+            // {
+            //     console.log("Nave inimiga")
+            // }
+            // else console.log("Outra coisa")
+            // Fazer check de colisão
+            if(ship.detectaColisao(e.element))
+            {
+                console.log("Colisão")
+                // Fazer uma função de morte para jogador e inimigo.
+            }
+            // Fazer uma função de check do inimigo com tiro.
+        })
         ship.move();
+        // Função de tiro da nave
+        // Função de pontuação
     }
     init();
 })();

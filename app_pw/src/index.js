@@ -1,5 +1,7 @@
 const express = require("express")
 const handlebars = require("express-handlebars")
+const cookieParser = require("cookie-parser")
+const csurf = require("csurf")
 const sass = require("node-sass-middleware")
 const logger = require("./middlewares/logger")
 const router = require("./router/router")
@@ -24,6 +26,16 @@ app.use(sass({
 app.use("/img", [
     express.static(`${__dirname}/../public/img`)
 ])
+app.use(cookieParser())
+app.use(csurf({cookie: true}));
+app.get("/test-cookie", (req, res) => {
+    if(!('nome' in req.cookies)){
+        res.cookie('nome', 'valor')
+        res.send("Voce não passou aqui")
+    } else {
+        res.send("Voce ja passou aqui")
+    }
+})
 
 app.use(router)
 
