@@ -39,4 +39,4 @@ const remove = async(req, res) => {
     }
 }
 
-modulo.exports = {index, create, read, update, remove}
+module.exports = {index, create, read, update, remove}
