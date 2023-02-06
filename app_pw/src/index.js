@@ -30,7 +30,10 @@ app.use("/img", [
 ])
 app.use("/css", express.static(`${__dirname}/../public/css`))
 app.use("/webfonts", express.static(`${__dirname}/../node_modules/@fortawesome/fontawesome-free/webfonts`))
-
+app.use("/js", [
+    express.static(`${__dirname}/../public/js`),
+    express.static(`${__dirname}/../node_modules/bootstrap/dist/js`),
+]);
 
 app.use(cookieParser())
 app.use(csurf({cookie: true}));
