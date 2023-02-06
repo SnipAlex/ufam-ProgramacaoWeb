@@ -10,6 +10,8 @@
 
     let space, ship;
     let enemies = [];
+    let pause = true;
+    let Dificuldade = 1
 
     function init() 
     {
@@ -21,7 +23,17 @@
     window.addEventListener("keydown", (e) => {
         if(e.key === "ArrowLeft") ship.mudaDirecao(-1);
         if(e.key === "ArrowRight") ship.mudaDirecao(+1);
+        if(e.key === ' ') if(pause === false) ship.atira(); else Pause()
+        if(e.key === "p") Pause()
     })
+
+    function Pause()
+    {
+        if (pause === false)
+            pause = true;
+        else 
+            pause = false;
+    }
 
     class Space
     {
@@ -39,6 +51,42 @@
             }px`
         }
     }
+    
+    class Tiro
+    {
+        constructor(nave)
+        {
+            this.tag = "Tiro"
+            this.element = document.createElement("img"); // Cria um elemento que retorna imagem
+            this.element.className = "Tiro-Jogador"; 
+            this.element.src = "assets/laserRed.png"; // Recebe uma imagem da pasta
+            this.navePos = nave.getBoundingClientRect()
+            this.element.style.top = `${parseInt(this.navePos.top)}px`;
+            this.element.style.left = `${parseInt(this.navePos.left)+36}px`;
+            this.moveT();
+            space.element.appendChild(this.element);
+        }
+        moveT()
+        {
+            let top = parseInt(this.element.style.top)
+            let inID;
+            console.log("Atirou")
+            
+            inID = setInterval(()=> {
+                this.element.style.top = `${
+                    top -= 20
+                }px`;
+                // Sera removido apos sair da tela
+                if ( top < 0 )
+                {
+                    this.element.parentElement.removeChild(this.element)
+                    console.log(`objeto..:${this.tag} removido`);
+                    clearInterval(inID);
+                }
+            }, 10)
+            
+        }
+    }
 
     class Ship
     {
@@ -48,12 +96,14 @@
             this.AssetDirecoes = [
                 "assets/playerLeft.png",
                 "assets/player.png",
-                "assets/playerRight.png"
+                "assets/playerRight.png",
+                "assets/playerDamaged.png"
             ]
             this.direcao = 1;
             this.element.src = this.AssetDirecoes[this.direcao];
             this.element.style.bottom = "20px"
             this.element.style.left = `${parseInt(TAMX/2)-50}px`
+            this.lives = 3;
         }
         mudaDirecao(giro)
         {
@@ -65,15 +115,19 @@
         }
         move()
         {
-            if (this.direcao === 0) this.element.style.left = `
-                ${parseInt(this.element.style.left)-1}px`
-            if (this.direcao === 2) this.element.style.left = `
-                ${parseInt(this.element.style.left)+1}px`
+            let lados = parseInt(this.element.style.left);
+            
+            if (this.direcao === 0 && lados > 1) this.element.style.left = `
+            ${parseInt(this.element.style.left)-1}px`
+            if (this.direcao === 2 && lados < 500) this.element.style.left = `
+            ${parseInt(this.element.style.left)+1}px`
             space.move();
         }
+        // Função de tiro da nave
         atira()
         {
             // Instancia um Objeto tiro
+            return new Tiro(this.element)
         }
         detectaColisao(enemy)
         {
@@ -100,15 +154,40 @@
             this.element.src = "assets/meteorBig.png"; // Recebe uma imagem da pasta
             this.element.style.top = "0px"; // Isso indica o movimento vertial do inimigo
             this.element.style.left = `${
-                Math.floor(Math.random()*TAMX)
+                Math.floor(Math.random()*(TAMX-100))
             }px`
             space.element.appendChild(this.element);
+            this.velocidade = Math.floor((Math.random()+1) * 2)
         }
-        move()
+        moveG()
         {
-            this.element.style.top = `${
-                parseInt(this.element.style.top) + 2
-            }px`;
+            // Verifica se o elemento ainda existe
+            if(this.element.parentElement)
+            {
+                let topo = parseInt(this.element.style.top);
+                this.element.style.top = `${
+                    (parseInt(this.element.style.top) + this.velocidade) + Dificuldade
+                }px`;
+                if(topo > 800)
+                {
+                    this.element.parentNode.removeChild(this.element)
+                    console.log(`objeto..:${this.tag} removido`);
+                }
+            }
+        }
+        detectaColisao(objeto)
+        {
+            // let thisHitbox = this.element.getBoundingClientRect();
+            // let objetoHitbox = objeto.getBoundingClientRect();
+
+            // return !(
+            //     thisHitbox.bottom < objetoHitbox.top ||
+            //     thisHitbox.top > objetoHitbox.bottom ||
+            //     thisHitbox.right < objetoHitbox.left ||
+            //     thisHitbox.left > objetoHitbox.right
+
+            // );
+            
         }
     }
     class AsteroidePequeno
@@ -121,15 +200,41 @@
             this.element.src = "assets/meteorSmall.png"; // Recebe uma imagem da pasta
             this.element.style.top = "0px"; // Isso indica o movimento vertial do inimigo
             this.element.style.left = `${
-                Math.floor(Math.random()*TAMX)
+                Math.floor(Math.random()*(TAMX-100))
             }px`
             space.element.appendChild(this.element);
+            this.velocidade = Math.floor(Math.random() * 8)
         }
-        move()
+        moveP()
         {
-            this.element.style.top = `${
-                parseInt(this.element.style.top) + 2
-            }px`;
+            // Verifica se o elemento ainda existe
+            if(this.element.parentElement)
+            {
+                let topo = parseInt(this.element.style.top);
+                this.element.style.top = `${
+                    (parseInt(this.element.style.top) + this.velocidade) + Dificuldade
+                }px`;
+                if(topo > 800)
+                {
+                    this.element.parentNode.removeChild(this.element)
+                    console.log(`objeto..:${this.tag} removido`);
+                }
+            }
+
+        }
+        detectaColisao(objeto)
+        {
+            // let thisHitbox = this.element.getBoundingClientRect();
+            // let objetoHitbox = objeto.getBoundingClientRect();
+
+            // return !(
+            //     thisHitbox.bottom < objetoHitbox.top ||
+            //     thisHitbox.top > objetoHitbox.bottom ||
+            //     thisHitbox.right < objetoHitbox.left ||
+            //     thisHitbox.left > objetoHitbox.right
+
+            // );
+            
         }
     }
 
@@ -143,55 +248,154 @@
             this.element.src = "assets/enemyShip.png"; // Recebe uma imagem da pasta
             this.element.style.top = "0px"; // Isso indica o movimento vertial do inimigo
             this.element.style.left = `${
-                Math.floor(Math.random()*TAMX)
+                Math.floor(Math.random()*(TAMX-100))
             }px`
             space.element.appendChild(this.element);
+            this.velocidade = Math.floor((Math.random() * 5)+1)
         }
         move()
         {
-            this.element.style.top = `${
-                parseInt(this.element.style.top) + 2
-            }px`;
+            // Verifica se o elemento ainda existe
+            if(this.element.parentElement)
+            {
+                let topo = parseInt(this.element.style.top);
+                this.element.style.top = `${
+                    (parseInt(this.element.style.top) + this.velocidade) + Dificuldade
+                }px`;
+                if(topo > 800)
+                {
+                    this.element.parentNode.removeChild(this.element)
+                    console.log(`objeto..:${this.tag} removido`);
+                }
+            }
+        }
+        detectaColisao(objeto)
+        {
+            // let thisHitbox = this.element.getBoundingClientRect();
+            // let objetoHitbox = objeto.getBoundingClientRect();
+
+            // return !(
+            //     thisHitbox.bottom < objetoHitbox.top ||
+            //     thisHitbox.top > objetoHitbox.bottom ||
+            //     thisHitbox.right < objetoHitbox.left ||
+            //     thisHitbox.left > objetoHitbox.right
+
+            // );
+            
+        }
+    }
+
+    class DiscoVoador
+    {
+        constructor()
+        {
+            this.tag = "DiscoV"
+            this.element = document.createElement("img"); // Cria um elemento que retorna imagem
+            this.element.className = "disco-voador"; 
+            this.element.src = "assets/enemyUFO.png"; // Recebe uma imagem da pasta
+            this.element.style.top = "0px"; // Isso indica o movimento vertial do inimigo
+            this.element.style.left = `${
+                Math.floor(Math.random()*(TAMX-100))
+            }px`
+            space.element.appendChild(this.element);
+            this.velocidade = Math.floor((Math.random() * 6)+1)
+        }
+        moveD()
+        {
+            // Verifica se o elemento ainda existe
+            if(this.element.parentElement)
+            {
+                let topo = parseInt(this.element.style.top);
+                this.element.style.top = `${
+                    (parseInt(this.element.style.top) + this.velocidade) + Dificuldade
+                }px`;
+                if(topo > 800)
+                {
+                    this.element.parentNode.removeChild(this.element)
+                    console.log(`objeto..:${this.tag} removido`);
+                }
+            }
+        }
+        detectaColisao(objeto)
+        {
+            let thisHitbox = this.element.getBoundingClientRect();
+            let objetoHitbox = objeto.getBoundingClientRect ? objeto.getBoundingClientRect() 
+            : objeto.getBoundingClientRect;
+
+            return !(
+                thisHitbox.bottom < objetoHitbox.top ||
+                thisHitbox.top > objetoHitbox.bottom ||
+                thisHitbox.right < objetoHitbox.left ||
+                thisHitbox.left > objetoHitbox.right
+
+            );
         }
     }
 
     // Run define o que vai acontecer no jogo 
     function run() {
-        const random_enemy_ship = Math.random() * 100;
-        const random_asteroide = Math.random() * 50;
-        if(random_enemy_ship <= PROB_ENEMY_SHIP)
+        if(pause === false)
         {
-            //Instancia o enimigo
-            enemies.push(new EnemyShip());
-        }
-        
-        if(random_asteroide <= PROB_ASTEROIDE)
-        {
-            if(random_asteroide%2==0)
-                enemies.push(new AsteroideGrande());
-            else
-                enemies.push(new AsteroidePequeno());
-        }
-        // Para cada inimigo instanciado, ele vai fazer:
-        enemies.forEach((e) => {
-            // Fazer movimento
-            e.move()
-            // if(e === )
-            // {
-            //     console.log("Nave inimiga")
-            // }
-            // else console.log("Outra coisa")
-            // Fazer check de colisão
-            if(ship.detectaColisao(e.element))
+            const random_enemy_ship = Math.random() * 100;
+            const random_asteroide = Math.random() * 50;
+            if(random_enemy_ship <= PROB_ENEMY_SHIP)
             {
-                console.log("Colisão")
-                // Fazer uma função de morte para jogador e inimigo.
+                //Instancia o enimigo
+                if(Math.random() < 0.5)
+                    enemies.push(new EnemyShip());
+                else
+                    enemies.push(new DiscoVoador());
             }
-            // Fazer uma função de check do inimigo com tiro.
-        })
-        ship.move();
-        // Função de tiro da nave
-        // Função de pontuação
+            
+            if(random_asteroide <= PROB_ASTEROIDE)
+            {
+                if(Math.random() < 0.5)
+                    enemies.push(new AsteroideGrande());
+                else
+                    enemies.push(new AsteroidePequeno());
+            }
+            // Para cada inimigo instanciado, ele vai fazer:
+            enemies.forEach((e) => {
+                // Fazer movimento
+                if(e.tag === "InimigoNave")
+                {
+                    e.move()
+                } 
+                else if (e.tag === "DiscoV")
+                {
+                    e.moveD()
+                }
+                else if (e.tag === "AsteroideG" && e != null)
+                {
+                    e.moveG()
+                }
+                else if (e.tag === "AsteroideP")
+                {
+                    e.moveP()
+                }
+                // Fazer check de colisão
+                if(ship.detectaColisao(e.element) && !(e.tag === "tiro"))
+                {
+                    console.log("Colisão")
+                    // Fazer uma função de morte para jogador e inimigo.
+                }
+                
+                // Fazer uma função de check do inimigo com tiro.
+                if(e.detectaColisao(document.querySelector(".Tiro-Jogador")))
+                {
+                    console.log("Inimigo colidiu")
+                }
+            })
+            ship.move();
+
+            // Função de pontuação
+
+            //Aumenta a dificuldade do jogo a cada X tempo
+            // setInterval(()=> {
+            //     Dificuldade++;
+            //     console.log(`Dificuldade aumentada para: ${Dificuldade}`)
+            // }, 60000);
+        }
     }
     init();
 })();
