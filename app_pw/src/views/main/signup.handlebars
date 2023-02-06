@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="col-8">
+        <form action="/signup" method="post"> 
+            {{!-- Professor pegou uma barra do bootstrap --}}
+            <div class="form-group">
+                <label for="nome">Nome completo</label>
+                <input 
+                    type="text"
+                    class="form-control"
+                    name="nome"
+                    id="nome"
+
+                />
+            </div>
+            <div>
+                <label for="cursoID" class="form-label">Selecionar</label>
+                <select class="form-select" name="cursoID">
+                    {{!-- Vai acontecer erro aqui pq não existe models Curso --}}
+                    {{#each cursos}}
+                    <option value="{{id}}">{{nome}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            {{!-- Aqui em diante o professor coloca outras barras, veja no slide --}}
+            <button id="button-submit"></button>
+        </form>
+    </div>
+</div>

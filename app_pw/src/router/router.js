@@ -14,4 +14,6 @@ router.get("/about", mainController.about)
 // router.post("/curso/:id", cursoController.update)
 // router.get("/curso/:id", cursoController.remove)
 
+router.get("/signup", mainController.signup);
+
 module.exports = router

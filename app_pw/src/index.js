@@ -1,10 +1,13 @@
 const express = require("express")
 const handlebars = require("express-handlebars")
+const session = require('express-session')
 const cookieParser = require("cookie-parser")
 const csurf = require("csurf")
+const uuid = require("uuid")
 const sass = require("node-sass-middleware")
-const router = require("./router/router")
 const morgan = require("morgan")
+const router = require("./router/router")
+
 const app = express()
 const PORT = 3000
 
@@ -45,6 +48,19 @@ app.get("/test-cookie", (req, res) => {
         res.send("Voce ja passou aqui")
     }
 })
+
+app.get("/uuid", (req, res) => {
+    res.send(uuid.v4());
+})
+
+app.use(session({
+    genid: (req =>{
+        return uuid.v4()
+    }),
+    secret: 'xX_bigmanaus_Xx',
+    resave: true,
+    saveUninitialized: true
+}));
 
 app.use(router)
 
