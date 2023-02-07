@@ -10,4 +10,8 @@ const about = (req, res) => {
     res.render("main/about")
 }
 
-module.exports = { index, about }
+const ui = (req, res) => {
+    res.render("main/ui");
+}
+
+module.exports = { index, about, ui }

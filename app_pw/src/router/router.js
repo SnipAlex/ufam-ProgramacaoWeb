@@ -3,10 +3,13 @@ const router = express.Router()
 const mainController = require("../controllers/main")
 const cursoController = require("../controllers/curso")
 
-router.get("/", mainController.index)
-router.get("/about", mainController.about)
+// Main controller
+router.get("/", mainController.index);
+router.get("/about", mainController.about);
+router.get("/ui", mainController.ui);
 
-//Controlador Curso aAinda tem que programar o resto do CRUD
+// User controller
+// Controlador Curso aAinda tem que programar o resto do CRUD
 // router.get("/curso", cursoController.index)
 // router.get("/curso/create", cursoController.create)
 // router.post("/curso/create", cursoController.create)
