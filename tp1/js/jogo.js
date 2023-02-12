@@ -21,16 +21,16 @@
     {
         switch (enem.tag) {
             case "AsteroideG":
-                points += 50;
-                break;
-            case "InimigoNave":
-                points += 100;
+                points += 10;
                 break;
             case "DiscoV":
-                points += 150;
+                points += 20;
+                break;
+            case "InimigoNave":
+                points += 50;
                 break;
             case "AsteroideP":
-                points += 200;
+                points += 100;
                 break;
             default:
                 break;
