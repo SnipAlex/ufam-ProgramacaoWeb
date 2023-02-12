@@ -27,3 +27,17 @@
 .Tiro-Jogador {
     position: absolute;
 }
+
+.Vidas {
+    
+}
+
+.pontos {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 20px;
+    margin-top: 20px;
+    font-size: large;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}

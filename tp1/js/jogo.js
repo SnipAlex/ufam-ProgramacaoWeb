@@ -12,6 +12,45 @@
     let enemies = [];
     let pause = true;
     let Dificuldade = 1
+    let pausaTempo;
+    let points = 0;
+    let VIDAS = 3;
+
+    // Função de pontuação
+    function pointAdd(enem)
+    {
+        switch (enem.tag) {
+            case "AsteroideG":
+                points += 50;
+                break;
+            case "InimigoNave":
+                points += 100;
+                break;
+            case "DiscoV":
+                points += 150;
+                break;
+            case "AsteroideP":
+                points += 200;
+                break;
+            default:
+                break;
+        }
+        document.querySelector("#pontuacao").innerHTML = points;
+        console.log(points)
+    }
+
+    function startInterval()
+    {
+        //Aumenta a dificuldade do jogo a cada X tempo
+        pausaTempo = setInterval(()=> {
+            Dificuldade++;
+            console.log(`Dificuldade aumentada para: ${Dificuldade}`)
+        }, 60000);
+    }
+
+    function stopInterval() {
+        clearInterval(pausaTempo);
+    }
 
     function init() 
     {
@@ -19,20 +58,41 @@
         ship = new Ship();
         const interval = window.setInterval(run, 1000 / FPS)
     }
-
+    //
     window.addEventListener("keydown", (e) => {
         if(e.key === "ArrowLeft") ship.mudaDirecao(-1);
         if(e.key === "ArrowRight") ship.mudaDirecao(+1);
         if(e.key === ' ') if(pause === false) ship.atira(); else Pause()
-        if(e.key === "p") Pause()
+        if(e.key === "p") Pause();
     })
-
+    // Pausa o jogo.
     function Pause()
     {
         if (pause === false)
+        {
             pause = true;
+            stopInterval();
+        }
         else 
+        {
             pause = false;
+            startInterval();
+        }
+    }
+    // Jogo terminado
+    function GameOver()
+    {
+        Pause();      
+        // Fun butão de recomeçar jogo
+
+        // Zerar Pontuação
+        points = 0;
+        // Devolver vidas
+        VIDAS = 3;
+        // apagar inimigos
+        enemies.element.remove();
+        // Re-instanciar jogador.
+        init();
     }
 
     class Space
@@ -77,14 +137,20 @@
                     top -= 20
                 }px`;
                 // Sera removido apos sair da tela
-                if ( top < 0 )
+                if ( top < 0)
                 {
-                    this.element.parentElement.removeChild(this.element)
-                    console.log(`objeto..:${this.tag} removido`);
-                    clearInterval(inID);
+                    if (this.element && this.element.parentElement) {
+                        this.element.parentElement.removeChild(this.element);
+                        console.log(`objeto..:${this.tag} removido`);
+                        clearInterval(inID);
+                    }
                 }
             }, 10)
             
+        }
+        Morrer()
+        {
+            this.element.remove();
         }
     }
 
@@ -103,7 +169,6 @@
             this.element.src = this.AssetDirecoes[this.direcao];
             this.element.style.bottom = "20px"
             this.element.style.left = `${parseInt(TAMX/2)-50}px`
-            this.lives = 3;
         }
         mudaDirecao(giro)
         {
@@ -142,6 +207,14 @@
 
             );
         }
+        levouDano()
+        {
+            VIDAS--;
+        }
+        Morrer()
+        {
+            this.element.remove();
+        }
     }
     
     class AsteroideGrande
@@ -177,17 +250,20 @@
         }
         detectaColisao(objeto)
         {
-            // let thisHitbox = this.element.getBoundingClientRect();
-            // let objetoHitbox = objeto.getBoundingClientRect();
+            let thisHitbox = this.element.getBoundingClientRect();
+            let objetoHitbox = objeto.getBoundingClientRect ? objeto.getBoundingClientRect() 
+            : objeto.getBoundingClientRect;
 
-            // return !(
-            //     thisHitbox.bottom < objetoHitbox.top ||
-            //     thisHitbox.top > objetoHitbox.bottom ||
-            //     thisHitbox.right < objetoHitbox.left ||
-            //     thisHitbox.left > objetoHitbox.right
-
-            // );
-            
+            return !(
+                thisHitbox.bottom < objetoHitbox.top ||
+                thisHitbox.top > objetoHitbox.bottom ||
+                thisHitbox.right < objetoHitbox.left ||
+                thisHitbox.left > objetoHitbox.right
+            );
+        }
+        Morrer()
+        {
+            this.element.remove();
         }
     }
     class AsteroidePequeno
@@ -224,17 +300,20 @@
         }
         detectaColisao(objeto)
         {
-            // let thisHitbox = this.element.getBoundingClientRect();
-            // let objetoHitbox = objeto.getBoundingClientRect();
+            let thisHitbox = this.element.getBoundingClientRect();
+            let objetoHitbox = objeto.getBoundingClientRect ? objeto.getBoundingClientRect() 
+            : objeto.getBoundingClientRect;
 
-            // return !(
-            //     thisHitbox.bottom < objetoHitbox.top ||
-            //     thisHitbox.top > objetoHitbox.bottom ||
-            //     thisHitbox.right < objetoHitbox.left ||
-            //     thisHitbox.left > objetoHitbox.right
-
-            // );
-            
+            return !(
+                thisHitbox.bottom < objetoHitbox.top ||
+                thisHitbox.top > objetoHitbox.bottom ||
+                thisHitbox.right < objetoHitbox.left ||
+                thisHitbox.left > objetoHitbox.right
+            );
+        }
+        Morrer()
+        {
+            this.element.remove();
         }
     }
 
@@ -271,17 +350,20 @@
         }
         detectaColisao(objeto)
         {
-            // let thisHitbox = this.element.getBoundingClientRect();
-            // let objetoHitbox = objeto.getBoundingClientRect();
+            let thisHitbox = this.element.getBoundingClientRect();
+            let objetoHitbox = objeto.getBoundingClientRect ? objeto.getBoundingClientRect() 
+            : objeto.getBoundingClientRect;
 
-            // return !(
-            //     thisHitbox.bottom < objetoHitbox.top ||
-            //     thisHitbox.top > objetoHitbox.bottom ||
-            //     thisHitbox.right < objetoHitbox.left ||
-            //     thisHitbox.left > objetoHitbox.right
-
-            // );
-            
+            return !(
+                thisHitbox.bottom < objetoHitbox.top ||
+                thisHitbox.top > objetoHitbox.bottom ||
+                thisHitbox.right < objetoHitbox.left ||
+                thisHitbox.left > objetoHitbox.right
+            );
+        }
+        Morrer()
+        {
+            this.element.remove();
         }
     }
 
@@ -330,6 +412,10 @@
 
             );
         }
+        Morrer()
+        {
+            this.element.remove();
+        }
     }
 
     // Run define o que vai acontecer no jogo 
@@ -338,6 +424,7 @@
         {
             const random_enemy_ship = Math.random() * 100;
             const random_asteroide = Math.random() * 50;
+            const test = []
             if(random_enemy_ship <= PROB_ENEMY_SHIP)
             {
                 //Instancia o enimigo
@@ -374,27 +461,37 @@
                     e.moveP()
                 }
                 // Fazer check de colisão
-                if(ship.detectaColisao(e.element) && !(e.tag === "tiro"))
+                if(ship.detectaColisao(e.element))
                 {
                     console.log("Colisão")
                     // Fazer uma função de morte para jogador e inimigo.
+                    ship.levouDano();
+                    if(VIDAS < 0)
+                    {
+                        //Ativar gameover
+                        //GameOver();
+                    }
+                    else
+                    {
+                        // Ship fun imunidade
+                        console.log("Invenci. ativa")
+                    }
                 }
-                
+
                 // Fazer uma função de check do inimigo com tiro.
-                if(e.detectaColisao(document.querySelector(".Tiro-Jogador")))
+                if( document.querySelector(".Tiro-Jogador") !== null )
                 {
-                    console.log("Inimigo colidiu")
+                    if(e.detectaColisao(document.querySelector(".Tiro-Jogador")))
+                    {
+                        console.log("Inimigo colidiu");
+                        const element = document.querySelector(".Tiro-Jogador");
+                        pointAdd(e);
+                        if (element) element.remove();
+                        e.Morrer();
+                    }
                 }
             })
             ship.move();
-
-            // Função de pontuação
-
-            //Aumenta a dificuldade do jogo a cada X tempo
-            // setInterval(()=> {
-            //     Dificuldade++;
-            //     console.log(`Dificuldade aumentada para: ${Dificuldade}`)
-            // }, 60000);
         }
     }
     init();
