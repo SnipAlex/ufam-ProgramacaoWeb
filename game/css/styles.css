@@ -1,0 +1,52 @@
+#space {
+    border: 1px solid black;
+    background-image: url("../assets/Background/starBackground.png");
+    position: relative;
+    overflow: hidden;
+}
+
+#ship {
+    position: absolute;
+}
+
+.enemy-ship {
+    position: absolute;
+}
+
+.disco-voador{
+    position: absolute;
+}
+
+.asteroideP {
+    position: absolute;
+}
+
+.asteroideG {
+    position: absolute;
+}
+.Tiro-Jogador {
+    position: absolute;
+}
+
+.Vidas {
+    background-image: "../assets/life.png";
+}
+
+.pontos {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 20px;
+    margin-top: 20px;
+    font-size: large;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.barra-vidas {
+    position: absolute;
+    top: 0;
+    right: 100px;
+    margin-right: 20px;
+    margin-top: 20px;
+    font-size: large;
+}
