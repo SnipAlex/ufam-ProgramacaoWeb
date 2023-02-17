@@ -7,7 +7,7 @@
 
     const PROB_ENEMY_SHIP =  0.5; // Probilidade de aparecer nave inimiga
     const PROB_ASTEROIDE = 0.3; // Probilidade de aparecer asteroide
-
+    let butaoReiniciar = document.getElementById("reiniciar");
     let space, ship;
     let enemies = [];
     let pause = true;
@@ -15,6 +15,7 @@
     let pausaTempo;
     let points = 0;
     let VIDAS = 3;
+    let BARRA_VIDAS = document.getElementById("vidasBar")
     let Danificado = false;
     let invincibleTime = 3000
 
@@ -85,16 +86,19 @@
     function GameOver()
     {
         Pause();      
-        // Fun butão de recomeçar jogo
+        // // Fun butão de recomeçar jogo
 
-        // Zerar Pontuação
-        points = 0;
-        // Devolver vidas
-        VIDAS = 3;
-        // apagar inimigos
-        enemies.element.remove();
-        // Re-instanciar jogador.
-        init();
+        // // Zerar Pontuação
+        // points = 0;
+        // // Devolver vidas
+        // VIDAS = 3;
+        // // apagar inimigos
+        // enemies.element.remove();
+        // // Re-instanciar jogador.
+        // init();
+        butaoReiniciar.addEventListener("click", () => {
+            location.reload();
+        })
     }
 
     class Space
@@ -171,6 +175,7 @@
             this.element.src = this.AssetDirecoes[this.direcao];
             this.element.style.bottom = "20px"
             this.element.style.left = `${parseInt(TAMX/2)-50}px`
+            this.criarBarraVidas();
         }
         mudaDirecao(giro)
         {
@@ -213,9 +218,19 @@
         {
             VIDAS--;
             Danificado = true;
+            if (BARRA_VIDAS.lastElementChild)
+                BARRA_VIDAS.lastElementChild.remove();
             setTimeout(() => {
                 Danificado = false;
             } ,invincibleTime);
+        }
+        criarBarraVidas()
+        {
+            for (let i = 0; i < VIDAS; i++) {
+                let img = document.createElement('img');
+                img.src = 'assets/life.png';
+                BARRA_VIDAS.appendChild(img);
+            }
         }
         Morrer()
         {
@@ -471,11 +486,13 @@
                 {
                     console.log("Colisão")
                     // Fazer uma função de morte para jogador e inimigo.
-                    ship.levouDano();
+                    if(Danificado == false)
+                        ship.levouDano();
                     if(VIDAS < 0)
                     {
+                        ship.Morrer()
                         //Ativar gameover
-                        //GameOver();
+                        GameOver();
                     }
                     else
                     {
