@@ -15,6 +15,8 @@
     let pausaTempo;
     let points = 0;
     let VIDAS = 3;
+    let Danificado = false;
+    let invincibleTime = 3000
 
     // Função de pontuação
     function pointAdd(enem)
@@ -210,6 +212,10 @@
         levouDano()
         {
             VIDAS--;
+            Danificado = true;
+            setTimeout(() => {
+                Danificado = false;
+            } ,invincibleTime);
         }
         Morrer()
         {
