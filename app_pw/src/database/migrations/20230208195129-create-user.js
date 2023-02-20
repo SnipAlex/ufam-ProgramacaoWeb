@@ -10,7 +10,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       nome: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull:false,
       },
       email: {
         allowNull: false,
@@ -18,10 +19,13 @@ module.exports = {
         type: Sequelize.STRING
       },
       senha: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       cursoId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        unique: true,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,

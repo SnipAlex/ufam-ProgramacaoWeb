@@ -10,16 +10,19 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       sigla: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull:false
       },
       nome: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       descricao: {
         type: Sequelize.TEXT
       },
       areaId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull:false
       },
       createdAt: {
         allowNull: false,
