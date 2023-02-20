@@ -8,19 +8,19 @@ module.exports = {
     await queryInterface.bulkInsert('Areas', [
       {
         id: 1,
-        name: 'Ciências Exatas',
+        nome: 'Ciências Exatas',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         id: 2,
-        name: 'Ciências Humanas',
+        nome: 'Ciências Humanas',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         id: 3,
-        name: 'Ciências Biológicas',
+        nome: 'Ciências Biológicas',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
