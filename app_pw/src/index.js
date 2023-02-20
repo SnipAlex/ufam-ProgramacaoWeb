@@ -46,7 +46,7 @@ app.get("/test-cookie", (req, res) => {
         res.send("Voce ja passou aqui")
     }
 })
-
+app.use(express.urlencoded({ extended: false }));
 app.use(router)
 
 app.listen(PORT, () => {
