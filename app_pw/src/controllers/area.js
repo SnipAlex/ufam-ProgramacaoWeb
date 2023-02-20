@@ -5,7 +5,7 @@ const index = async (req, res) =>
 {
     const areas = await Area.findAll();;
     res.render('area/index', {
-        areas: areas.map(area => area.toJSON())
+        areas: areas.map((area) => area.toJSON())
     });
 };
 
