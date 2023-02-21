@@ -36,6 +36,8 @@ app.use("/js", [
     express.static(`${__dirname}/../node_modules/@popperjs/core/dist/umd/`),
 ]);
 
+app.use(express.urlencoded({ extended: false }));
+
 app.use(cookieParser())
 app.use(csurf({cookie: true}));
 app.get("/test-cookie", (req, res) => {
@@ -46,7 +48,6 @@ app.get("/test-cookie", (req, res) => {
         res.send("Voce ja passou aqui")
     }
 })
-app.use(express.urlencoded({ extended: false }));
 app.use(router)
 
 app.listen(PORT, () => {

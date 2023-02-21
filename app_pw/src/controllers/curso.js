@@ -17,7 +17,7 @@ const create = async(req, res) => {
     else {
         const curso = req.body
         try{
-            await Curso.create(curso)
+            await Curso.create(curso);
             res.redirect("/curso");
         } catch (e){
             console.log(e);
