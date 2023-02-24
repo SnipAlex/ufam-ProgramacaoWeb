@@ -5,7 +5,7 @@ const Area = models.Area;
 const index = async(req, res) => {
     try {
         const cursos = await Curso.findAll();
-        res.render("/curso", {
+        res.render('curso/index', {
             cursos: cursos.map((curso) => curso.toJSON())
         })
     }
