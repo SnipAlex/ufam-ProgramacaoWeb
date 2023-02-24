@@ -39,7 +39,7 @@ app.use("/js", [
 
 app.use(cookieParser())
 app.use(csurf({cookie: true}));
-app.get("/test-cookie", (req, res) => {
+app.get("/cookie", (req, res) => {
     if(!('nome' in req.cookies)){
         res.cookie('nome', 'valor')
         res.send("Voce não passou aqui")

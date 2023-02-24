@@ -7,6 +7,7 @@ const areaController = require("../controllers/area")
 router.get("/", mainController.index);
 router.get("/about", mainController.about);
 router.get("/ui", mainController.ui);
+router.get("/game", mainController.game);
 
 // Area controller
 router.get("/areas", areaController.index);
