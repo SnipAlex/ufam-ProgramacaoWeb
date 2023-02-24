@@ -1,5 +1,7 @@
-<h1>Listagem de Cursos</h1>
-
+<div class="index-cursos">
+  <h2>Listagem de Cursos</h2>
+  <div><a href="/curso/create" type="button" class="btn btn-primary"><i class="fa-solid fa-square-plus"></i></a></div>
+</div>
 <table class="table table-hover">
   <thead>
     <tr>
@@ -11,12 +13,44 @@
   </thead>
   <tbody>
     {{#each cursos}}
-      <tr class="table-dark">
-        <td>{{sigla}}</td>
-        <td>{{nome}}</td>
-        <td>{{areaId}}</td>
-        <td></td>
-      </tr>
+    <tr class="table-dark">
+      <td>{{sigla}}</td>
+      <td>{{nome}}</td>
+      <td>{{areaId}}</td>
+      <td>
+        <a href="/curso/{{id}}"><i class="fa-solid fa-eye"></i></a>
+        <a class="botao-delecao" href="/curso/{{id}}" data-cursoid="{{id}}" data-bs-toggle="modal" data-bs-target="#modal-curso-{{id}}"><i class="fa-solid fa-trash"></i></a>
+      </td>
+    </tr>
     {{/each}}
   </tbody>
 </table>
+
+{{#each cursos}}
+<div class="modal fade" id="modal-curso-{{id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Deleção de curso</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Tem certeza que queres deletar curso <b>{{nome}}</b>?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+        <button id="delecao-curso-{{id}}" type="button" class="btn btn-primary">Sim</button>
+      </div>
+    </div>
+  </div>
+</div>
+{{/each}}
+
+{{#each cursos}}
+  <script>
+    const delecaoCurso{{id}} = document.getElementById("delecao-curso-{{id}}")
+    delecaoCurso{{id}}.onclick = function() {
+      apagarCurso({{id}});
+    }
+  </script>
+{{/each}}

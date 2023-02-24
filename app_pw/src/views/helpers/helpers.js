@@ -1,4 +1,18 @@
-const toUpper = (str) => str.toUpperCase();
-const toLower = (str) => str.toLowerCase();
+export function showError(erros, field)
+{
+    let mensagem = '';
+    if(errors) {
+        errors.forEach((e) => {
+            if(e.path === field) {
+                mensagem += e.mensagem;
+            }
+        })
+    }
+    return mensagem;
+}
 
-module.exports = { toUpper, toLower }
+export function isChecked(curso,value)
+{
+    if( curso && curso.areaId === value) return "checked";
+    return "";
+}

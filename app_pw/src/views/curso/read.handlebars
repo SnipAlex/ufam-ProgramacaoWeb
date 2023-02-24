@@ -1,0 +1,38 @@
+<div class="card">
+  <div class="card-header card-cursos">
+    <div>
+        {{curso.nome}}
+    </div>
+    <div><a href="http://"data-bs-toggle="modal" data-bs-target="#modal-delecao"><i class="fa-solid fa-trash-can"></i></a></div>
+  </div>
+  <div class="card-body">
+    <p class="card-text">Área: {{curso.Area.nome}}</p>
+    <p class="card-text">Descrição: {{curso.descricao}}</p>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal-delecao" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Deletar curso</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Tem certeza que queres apagar o curso {{curso.nome}} ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não, cancelar</button>
+        <button id="botao-delecao" type="button" class="btn btn-primary">Sim, quero apagar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    const botaoDelecao = document.getElementById("botao-delecao");
+    botaoDelecao.onclick = function(){
+        apagarCurso({{curso.id}});
+    }
+</script>

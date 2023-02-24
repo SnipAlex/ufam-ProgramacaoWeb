@@ -16,6 +16,18 @@ iframe {
     font-size: 1rem
 }
 
+.card-cursos {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.index-cursos {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 #home .navbar,
 #help .navbar {
     background: linear-gradient(145deg, #375ee3 0%, #6543e0 80%)

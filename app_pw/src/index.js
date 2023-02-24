@@ -11,6 +11,7 @@ const PORT = 3000
 
 app.use(morgan("short"))
 
+app.use(express.urlencoded({ extended: false }));
 app.engine("handlebars", handlebars.engine({
     layoutsDir: `${__dirname}/views/layouts`,
     helpers: require(`${__dirname}/views/helpers/helpers`)
@@ -35,8 +36,6 @@ app.use("/js", [
     express.static(`${__dirname}/../node_modules/bootstrap/dist/js/`),
     express.static(`${__dirname}/../node_modules/@popperjs/core/dist/umd/`),
 ]);
-
-app.use(express.urlencoded({ extended: false }));
 
 app.use(cookieParser())
 app.use(csurf({cookie: true}));
