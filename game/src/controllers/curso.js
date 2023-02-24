@@ -17,15 +17,17 @@ const index = async(req, res) => {
 
 const create = async(req, res) => {
     if(req.route.methods.get){
-        res.render("curso/create");
+        res.render("curso/create", {
+            csrf: req.csrfToken()
+        });
     } else {
         const curso = req.body
         try{
             await Curso.create(curso);
             res.redirect("/curso");
         } catch (e){
-            console.log(e);
-            res.status(500).json(error);
+            console.log(e.errors);
+            res.status(500).json(e);
         }
     }
 }
