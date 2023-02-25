@@ -18,4 +18,8 @@ const game = (req, res) => {
     res.render("main/game")
 }
 
-module.exports = { index, about, ui, game}
+const signup = (req, res) => {
+    res.render("main/signup")
+}
+
+module.exports = { index, about, ui, game, signup}
