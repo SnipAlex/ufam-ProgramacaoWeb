@@ -1,13 +1,15 @@
 <div class="card">
   <div class="card-header card-cursos">
     <div>
-        {{curso.nome}}
+      {{curso.nome}}
     </div>
     <div><a href="http://"data-bs-toggle="modal" data-bs-target="#modal-delecao"><i class="fa-solid fa-trash-can"></i></a></div>
   </div>
   <div class="card-body">
-    <p class="card-text">Área: {{curso.Area.nome}}</p>
+    <p class="card-text">Sigla: {{curso.sigla}}</p>
+    <p class="card-text">Nome: {{curso.nome}}</p>
     <p class="card-text">Descrição: {{curso.descricao}}</p>
+    <p class="card-text">Área: {{curso.Area.nome}}</p>
   </div>
 </div>
 
