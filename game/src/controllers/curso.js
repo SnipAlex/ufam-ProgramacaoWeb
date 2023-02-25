@@ -35,7 +35,7 @@ const create = async(req, res) => {
 const read = async(req, res) => {
     const { id } = req.params;
     try {
-        const curso = await Curso.findByPK(id, { include: Area});
+        const curso = await Curso.findByPk(id, { include: Area});
         res.render("curso/read", { curso: curso.toJSON() });
     } catch (error) {
         console.log(error)
